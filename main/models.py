@@ -4,13 +4,13 @@ from django.db import models
 
 # Create your models here.
 class Diet(models.Model):
-    diet = models.CharField('diet', max_length=100, unique=True)
+    diet = models.CharField('diet', max_length=100, unique=True, blank=True)
 
     def __str__(self):
         return self.diet
 
 class Cuisine(models.Model):
-    cuisine = models.CharField('cuisine', max_length=100, unique=True)
+    cuisine = models.CharField('cuisine', max_length=100, unique=True, blank=True)
 
     def __str__(self):
         return self.cuisine
