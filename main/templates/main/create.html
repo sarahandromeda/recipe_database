@@ -4,5 +4,12 @@
 Home
 {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ recipe_form|crispy}}
+        {{ ingredient_formset|crispy}}
+    </form>
 {% endblock %}

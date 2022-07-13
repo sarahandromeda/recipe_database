@@ -62,10 +62,10 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Recipie',
+            name='Recipe',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('recipie_name', models.CharField(max_length=100)),
+                ('recipe_name', models.CharField(max_length=100)),
                 ('description', models.CharField(max_length=200)),
                 ('instructions', models.CharField(max_length=500)),
                 ('cook_time', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.cooktime')),
@@ -75,14 +75,14 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='RecipieIngredient',
+            name='RecipeIngredient',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.IntegerField()),
                 ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.ingredient')),
                 ('prep_method', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.prepmethod')),
                 ('quantity_unit', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.quantityunit')),
-                ('recipie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.recipie')),
+                ('recipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.recipe')),
             ],
         ),
     ]

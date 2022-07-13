@@ -61,60 +61,60 @@ class QuantityUnit(models.Model):
     def __str__(self):
         return self.quantity_unit
 
-class Recipie(models.Model):
-    recipie_name = models.CharField('recipie name', max_length=100)
-    description = models.CharField('description', max_length=200)
-    instructions = models.CharField('instructions', max_length=500)
+class Recipe(models.Model):
+    recipe_name = models.CharField('recipe name', max_length=100)
+    description = models.TextField('description', max_length=200)
+    instructions = models.TextField('instructions', max_length=800)
     diet = models.ManyToManyField(Diet)
     cuisine = models.ForeignKey(
         'Cuisine', 
         on_delete=models.CASCADE, 
-        related_name='recipies', 
-        related_query_name='recipie'
+        related_name='recipes', 
+        related_query_name='recipe'
         )
     difficulty = models.ForeignKey(
         'Difficulty', 
         on_delete=models.CASCADE,
-        related_name='recipies',
-        related_query_name='recipie'
+        related_name='recipes',
+        related_query_name='recipe'
         )
     cook_time = models.ForeignKey(
         'CookTime', 
         on_delete=models.CASCADE,
-        related_name='recipies',
-        related_query_name='recipie'
+        related_name='recipes',
+        related_query_name='recipe'
         )
 
     def __str__(self):
-        return self.recipie_name
+        return self.recipe_name
 
 
-class RecipieIngredient(models.Model):
-    recipie = models.ForeignKey(
-        'Recipie', 
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(
+        'Recipe', 
         on_delete=models.CASCADE,
-        related_name='recipie_ingredients',
-        related_query_name='recipie_ingredient'
+        related_name='recipe_ingredients',
+        related_query_name='recipe_ingredient'
         )
     ingredient = models.ForeignKey(
         'Ingredient', 
         on_delete=models.CASCADE,
-        related_name='recipie_ingredients',
-        related_query_name='recipie_ingredient'
+        related_name='recipe_ingredients',
+        related_query_name='recipe_ingredient'
         ) 
     quantity_unit = models.ForeignKey(
         'QuantityUnit', 
         on_delete=models.CASCADE,
-        related_name='recipie_ingredients',
-        related_query_name='recipie_ingredient'
+        related_name='recipe_ingredients',
+        related_query_name='recipe_ingredient'
         )
     prep_method = models.ForeignKey(
         'PrepMethod', 
         on_delete=models.CASCADE,
-        related_name='recipie_ingredients',
-        related_query_name='recipie_ingredient'
+        related_name='recipe_ingredients',
+        related_query_name='recipe_ingredient'
         )
-    amount = models.IntegerField()
+    amount = models.FloatField()
 
     def __str__(self):
         return self.ingredient
