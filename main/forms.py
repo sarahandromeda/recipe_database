@@ -1,5 +1,6 @@
-from django.forms import ChoiceField, forms, modelformset_factory, ModelForm
+from django.forms import ChoiceField, ModelForm, inlineformset_factory 
 from .models import Diet, Cuisine, Difficulty, CookTime, Ingredient, PrepMethod, QuantityUnit, Recipe, RecipeIngredient 
+
 
 class CreateNewRecipe(ModelForm):
     difficulty = ChoiceField(choices=Difficulty.DIFFICULTIES)
@@ -9,7 +10,8 @@ class CreateNewRecipe(ModelForm):
         model = Recipe
         fields = '__all__'
 
-IngredientFormSet = modelformset_factory(
+IngredientFormSet = inlineformset_factory(
+    Recipe,
     RecipeIngredient,
     exclude=('recipe',),
     extra=1

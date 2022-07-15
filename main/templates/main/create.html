@@ -10,6 +10,41 @@ Home
     <form method="POST" class="form-group">
         {% csrf_token %}
         {{ recipe_form|crispy}}
-        {{ ingredient_formset|crispy}}
+        <table style="display: none">
+            {{ ingredient_formset|crispy }}
+        </table>
     </form>
+{% endblock %}
+
+{% block footer %}
+<script>
+    // function for default select2
+    $(document).ready(function () {
+        $('#id_diet').attr('multiple', 'multiple');
+        $('#id_diet').select2({tags: true});
+        $('#id_cuisine').select2({tags: true});
+        $('#id_difficulty').select2({minimumResultsForSearch: Infinity});
+        $('#id_cook_time').select2({minimumResultsForSearch: Infinity});
+        $("select[name$='quantity_unit'").select2({tags: true});
+        $("select[name$='prep_method'").select2({tags: true});
+    })
+    // function for ajax select2
+    $(document).ready(function () {
+        $('#id_recipe_ingredients-0-ingredient').select2({
+            ajax: {
+                url: "{% url 'create' %}",
+                dataType: 'json',
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {id: item.id, text: item.ingredient_name};
+                        })
+                    };
+                }
+            },
+            tags: true,
+            minimumInputLength: 1
+        });
+    });
+</script>
 {% endblock %}

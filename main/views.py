@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from requests import request
 from .models import Diet, Cuisine, Difficulty, CookTime, Ingredient, PrepMethod, QuantityUnit, Recipe, RecipeIngredient 
 from .forms import CreateNewRecipe, IngredientFormSet
 
@@ -21,9 +22,17 @@ def my_home(response):
 
 # create new recipe page
 # show recipe form
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
 def create(response):
     recipe_form = CreateNewRecipe()
     ingredient_formset = IngredientFormSet(queryset=RecipeIngredient.objects.none())
+    if is_ajax(response):
+        term = response.GET.get('term')
+        ingredients = Ingredient.objects.all().filter(ingredient_name__icontains=term)
+        response_content = list(ingredients.values())
+        return JsonResponse(response_content, safe=False)
     return render(
         response, 
         'main/create.html', 
