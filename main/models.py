@@ -65,12 +65,13 @@ class Recipe(models.Model):
     recipe_name = models.CharField('recipe name', max_length=100)
     description = models.TextField('description', max_length=200)
     instructions = models.TextField('instructions', max_length=800)
-    diet = models.ManyToManyField(Diet)
+    diet = models.ManyToManyField(Diet, blank=True)
     cuisine = models.ForeignKey(
         'Cuisine', 
         on_delete=models.CASCADE, 
         related_name='recipes', 
-        related_query_name='recipe'
+        related_query_name='recipe',
+        blank=True
         )
     difficulty = models.ForeignKey(
         'Difficulty', 
@@ -112,7 +113,8 @@ class RecipeIngredient(models.Model):
         'PrepMethod', 
         on_delete=models.CASCADE,
         related_name='recipe_ingredients',
-        related_query_name='recipe_ingredient'
+        related_query_name='recipe_ingredient',
+        blank=True
         )
     amount = models.FloatField()
 
